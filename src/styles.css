@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://cdn.jsdelivr.net/gh/jgthms/minireset.css@master/minireset.min.css");
+html, body {
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+* {
+    font-family: Inter, "Helvetica Neue", sans-serif;
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 48px;
+}
+
+h2 {
+    font-size: 40px;
+}
+
+.container {
+    max-width: 850px;
+    margin: auto;
+}
