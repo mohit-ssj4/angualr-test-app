@@ -11,6 +11,12 @@ import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
 import { TodosComponent } from './components/todos/todos.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { BookmarkTileComponent } from './components/bookmark-tile/bookmark-tile.component';
+import { AddNoteComponent } from './add-note/add-note.component';
+import { NoteCardComponent } from './components/note-card/note-card.component';
+import { FormsModule } from '@angular/forms';
+import { EditNoteComponent } from './components/edit-note/edit-note.component';
+import { TodoItemComponent } from './components/todo-item/todo-item.component';
+import { AddTodoComponent } from './components/add-todo/add-todo.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +26,11 @@ import { BookmarkTileComponent } from './components/bookmark-tile/bookmark-tile.
     TodosComponent,
     NotesComponent,
     BookmarkTileComponent,
+    AddNoteComponent,
+    NoteCardComponent,
+    EditNoteComponent,
+    TodoItemComponent,
+    AddTodoComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +42,7 @@ import { BookmarkTileComponent } from './components/bookmark-tile/bookmark-tile.
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
