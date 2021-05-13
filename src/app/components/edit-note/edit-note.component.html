@@ -9,8 +9,10 @@
         <div class="form-field">
             <input type="text" placeholder="Enter note title" class="text-box" name="title" [ngModel]="note.title"
                 #titleField=ngModel autocomplete="off" autofocus required minlength="3">
-            <p *ngIf="titleField.errors?.required">Please enter a note title</p>
-            <p *ngIf="titleField.errors?.minlength">Note title must be at least 3 characters</p>
+            <ng-container *ngIf="showValidationErrors && form.invalid">
+                <p *ngIf="titleField.errors?.required">Please enter a note title</p>
+                <p *ngIf="titleField.errors?.minlength">Note title must be at least 3 characters</p>
+            </ng-container>
         </div>
         <div class="form-field">
             <textarea class="text-area" placeholder="Enter note content" name="content"

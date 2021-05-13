@@ -11,6 +11,7 @@ import { NoteService } from 'src/app/shared/note.service';
 })
 export class EditNoteComponent implements OnInit {
   note!: Note;
+  showValidationErrors!: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,6 +27,11 @@ export class EditNoteComponent implements OnInit {
   }
 
   onFormSubmit(form: NgForm) {
+    if (form.invalid) {
+      this.showValidationErrors = true;
+      return;
+    }
+
     this.noteService.updateNote(this.note.id, form.value);
     this.router.navigateByUrl('/notes');
   }

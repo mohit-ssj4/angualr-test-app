@@ -36,3 +36,18 @@
     max-width: 100%;
     text-overflow: ellipsis;
 }
+
+.tile-icon {
+    height: 32px;
+    width: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tile-icon.fallback {
+    background: white;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: 600;
+}

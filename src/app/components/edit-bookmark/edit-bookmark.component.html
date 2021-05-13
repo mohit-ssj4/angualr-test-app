@@ -1,0 +1,44 @@
+<div class="edit-bookmark-wrapper container">
+    <ng-container *ngIf="!bookmark">
+        <p>
+            Please click on the bookmarks to manage them.
+        </p>
+        <div class="btns-container">
+            <a routerLink='../../' class="btn">
+                <i class="material-icons-outlined">arrow_back</i>
+                Cancel
+            </a>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="bookmark">
+        <h2 class="is-bold">
+            {{bookmark.name | titlecase}}
+        </h2>
+        <form #form="ngForm" ngNativeValidate (ngSubmit)="onFormSubmit(form)">
+            <div class="form-field">
+                <label class="form-label">Name</label>
+                <input type="text" placeholder="e.g. YouTube" class="text-box" name="name" ngModel #nameField=ngModel
+                    [ngModel]="bookmark.name" autocomplete="off" autofocus>
+            </div>
+            <div class="form-field">
+                <label class="form-label">URL</label>
+                <input type="url" placeholder="e.g. https://youtube.com" class="text-box" name="url" ngModel
+                    #urlField=ngModel [ngModel]="bookmark.url" autocomplete="off" autofocus required>
+            </div>
+            <div class="btns-container">
+                <a routerLink='../../' class="btn">
+                    <i class="material-icons-outlined">arrow_back</i>
+                    Cancel
+                </a>
+                <button class="btn" type="button" (click)="delete()">
+                    <i class="material-icons-outlined">delete</i>
+                    Delete
+                </button>
+                <button class="btn align-end">
+                    <i class="material-icons-outlined">send</i>
+                    Save Bookmark
+                </button>
+            </div>
+        </form>
+    </ng-container>
+</div>
