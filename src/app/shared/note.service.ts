@@ -5,12 +5,11 @@ import { Note } from './note.model';
   providedIn: 'root',
 })
 export class NoteService {
-  notes: Note[] = [
-    new Note('First Note', 'This is the first note'),
-    new Note('Second Note', 'This is the second note'),
-  ];
+  notes!: Note[];
 
-  constructor() {}
+  constructor() {
+    this.loadState();
+  }
 
   getNotes() {
     return this.notes;
@@ -22,16 +21,28 @@ export class NoteService {
 
   addNote(note: Note) {
     this.notes.push(note);
+    this.saveState();
   }
 
   updateNote(id: string, updateFields: Partial<Note>) {
     const note = this.getNote(id);
     Object.assign(note, updateFields);
+    this.saveState();
   }
 
   deleteNote(id: string) {
     const noteIndex = this.notes.findIndex((n) => n.id === id);
     if (noteIndex == -1) return;
     this.notes.splice(noteIndex, 1);
+    this.saveState();
+  }
+
+  saveState() {
+    localStorage.setItem('notes', JSON.stringify(this.notes));
+  }
+
+  loadState() {
+    const notesInStorage = JSON.parse(localStorage.getItem('notes') || '[]');
+    this.notes = notesInStorage;
   }
 }

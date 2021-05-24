@@ -6,8 +6,18 @@ import {
   trigger,
   group,
 } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Observable, timer } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+const baseStyles = style({
+  position: 'absolute',
+  top: '0',
+  left: '0',
+  width: '100%',
+  height: '100%',
+});
 
 @Component({
   selector: 'app-root',
@@ -20,19 +30,7 @@ import { RouterOutlet } from '@angular/router';
           position: 'relative',
           overflow: 'hidden',
         }),
-        query(
-          ':enter, :leave',
-          [
-            style({
-              position: 'absolute',
-              top: '0',
-              left: '0',
-              width: '100%',
-              height: '100%',
-            }),
-          ],
-          { optional: true }
-        ),
+        query(':enter, :leave', [baseStyles], { optional: true }),
         group([
           query(
             ':leave',
@@ -71,19 +69,7 @@ import { RouterOutlet } from '@angular/router';
           position: 'relative',
           overflow: 'hidden',
         }),
-        query(
-          ':enter, :leave',
-          [
-            style({
-              position: 'absolute',
-              top: '0',
-              left: '0',
-              width: '100%',
-              height: '100%',
-            }),
-          ],
-          { optional: true }
-        ),
+        query(':enter, :leave', [baseStyles], { optional: true }),
         group([
           query(
             ':leave',
@@ -117,13 +103,101 @@ import { RouterOutlet } from '@angular/router';
           ),
         ]),
       ]),
+      transition('* => secondary', [
+        style({
+          position: 'relative',
+        }),
+        query(':enter, :leave', [baseStyles], { optional: true }),
+        group([
+          query(
+            ':leave',
+            [
+              animate(
+                '250ms 120ms ease-out',
+                style({
+                  opacity: '0',
+                  transform: 'scale(0.8)',
+                })
+              ),
+            ],
+            { optional: true }
+          ),
+          query(
+            ':enter',
+            [
+              style({
+                opacity: '0',
+                transform: 'scale(1.2)',
+              }),
+              animate(
+                '250ms 120ms ease-out',
+                style({
+                  opacity: '1',
+                  transform: 'scale(1)',
+                })
+              ),
+            ],
+            { optional: true }
+          ),
+        ]),
+      ]),
+      transition('secondary => *', [
+        style({
+          position: 'relative',
+        }),
+        query(':enter, :leave', [baseStyles], { optional: true }),
+        group([
+          query(
+            ':leave',
+            [
+              animate(
+                '250ms 120ms ease-out',
+                style({
+                  opacity: '0',
+                  transform: 'scale(1.2)',
+                })
+              ),
+            ],
+            { optional: true }
+          ),
+          query(
+            ':enter',
+            [
+              style({
+                opacity: '0',
+                transform: 'scale(0.8)',
+              }),
+              animate(
+                '250ms 120ms ease-out',
+                style({
+                  opacity: '1',
+                  transform: 'scale(1)',
+                })
+              ),
+            ],
+            { optional: true }
+          ),
+        ]),
+      ]),
     ]),
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  dateTime!: Observable<Date>;
+
+  ngOnInit() {
+    this.dateTime = timer(0, 1000).pipe(
+      map(() => {
+        return new Date();
+      })
+    );
+  }
+
   prepareRoute(outlet: RouterOutlet) {
     if (outlet.isActivated) {
-      return outlet.activatedRouteData['tab'];
+      const tab = outlet.activatedRouteData['tab'];
+      if (!tab) return 'secondary';
+      return tab;
     } else {
       return;
     }
